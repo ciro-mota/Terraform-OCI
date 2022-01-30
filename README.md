@@ -1,10 +1,17 @@
 # Terraform-OCI
 
+![image](https://img.shields.io/badge/Oracle-F80000?style=for-the-badge&logo=oracle&logoColor=black) 
+![image](https://img.shields.io/badge/terraform-%235835CC.svg?style=for-the-badge&logo=terraform&logoColor=white)
+![image](https://img.shields.io/badge/Shell_Script-121011?style=for-the-badge&logo=gnu-bash&logoColor=white)
+![image](https://img.shields.io/badge/Cent%20OS-262577?style=for-the-badge&logo=CentOS&logoColor=white)
+![image](https://img.shields.io/badge/Red%20Hat-EE0000?style=for-the-badge&logo=redhat&logoColor=white)
+![image](https://img.shields.io/badge/Ubuntu-E95420?style=for-the-badge&logo=ubuntu&logoColor=white)
+
 ## Disclaimer:
 
 Este Git destina-se aos estudos do Terraform com a Oracle OCI. Modificações serão feitas à medida que os estudos forem avançando e descobertas forem sendo feitas.
 
-Pull Requests também são muito bem vindos.
+Pull Requests também são muito bem-vindos.
 
 ## Propósito:
 
@@ -52,6 +59,10 @@ Com isso será gerado o seu **fingerprint**, copie e cole em um bloco de notas.
 - **region**:
 
 Certifique-se de qual é a Região utilizada na sua conta. Você consegue esse valor através do campo "Tenancy details", executado no primeiro passo.
+
+- **SSH**:
+
+É necessário um par de chaves para acesso SSH à instância. Gere um novo par com o comando `ssh-keygen -b 2048 -t rsa`.
 
 2. Adicione algumas variáveis ao seu arquivo `.bashrc` ou `.zshrc` preenchendo-as com os valores obtidos anteriormente:
 
