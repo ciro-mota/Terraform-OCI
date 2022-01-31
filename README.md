@@ -64,6 +64,14 @@ Certifique-se de qual é a Região utilizada na sua conta. Você consegue esse v
 
 É necessário um par de chaves para acesso SSH à instância. Gere um novo par com o comando `ssh-keygen -b 2048 -t rsa`.
 
+- **State Remoto**
+
+Você pode querer armazenar os seus *states* remotamente em um bucket na OCI. Para isso Menu Principal -> Storage -> Object Storage & Archive Storage -> crie um *Bucket* de nome único -> Create Pre-Authenticated Request -> Permit object reads and writes e copie a URL fornecida.
+
+No arquivo `main.tf` descomente as linhas de 8 a 11 e insira a URL fornecida no campo `address`.
+
+Este é um passo meramente opcional.
+
 2. Adicione algumas variáveis ao seu arquivo `.bashrc` ou `.zshrc` preenchendo-as com os valores obtidos anteriormente:
 
 ```bash

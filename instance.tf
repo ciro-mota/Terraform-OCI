@@ -48,7 +48,7 @@ resource "oci_core_instance" "instance" {
     subnet_id        = oci_core_subnet.test_subnet.id
     display_name     = "primaryvnic"
     assign_public_ip = true
-    hostname_label   = "Ubuntu-Always-Free"
+    hostname_label   = "Instance-Always-Free"
   }
   source_details {
     source_type = "image"
