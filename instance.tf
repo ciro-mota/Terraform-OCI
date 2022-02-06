@@ -36,6 +36,7 @@ data "oci_core_images" "centos_7" {
 resource "oci_core_instance" "instance" {
   availability_domain = data.oci_identity_availability_domains.ad.availability_domains[0].name
   compartment_id      = var.compartment_ocid
+  count               = var.count_instance
   display_name        = var.instance_name
   shape               = var.shape_amd
   # shape               = var.shape_arm # Comente a entrada acima e descomente esta para usar o shape ARM. Configue no arquivo de variáveis o tamanho de CPU e MEM.
@@ -59,5 +60,7 @@ resource "oci_core_instance" "instance" {
   }
   metadata = {
     ssh_authorized_keys = var.public_key_path
+    # user_data           = "${base64encode(file("script.sh"))}" # Descomente esta entrada para usar um script de implantação da instância.
   }
+
 }

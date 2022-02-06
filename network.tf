@@ -1,7 +1,7 @@
 data "oci_core_vnic_attachments" "app_vnics" {
   compartment_id      = var.compartment_ocid
   availability_domain = data.oci_identity_availability_domains.ad.availability_domains[0].name
-  instance_id         = oci_core_instance.instance.id
+  instance_id         = oci_core_instance.instance[0].id
 }
 data "oci_core_vnic" "app_vnic" {
   vnic_id = data.oci_core_vnic_attachments.app_vnics.vnic_attachments[0]["vnic_id"]
@@ -61,6 +61,15 @@ resource "oci_core_security_list" "test_security_list" {
     tcp_options {
       max = "80"
       min = "80"
+    }
+  }
+
+  ingress_security_rules {
+    protocol = "6"
+    source   = "0.0.0.0/0"
+    tcp_options {
+      max = "443"
+      min = "443"
     }
   }
 }

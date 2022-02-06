@@ -49,3 +49,7 @@ variable "shape_arm_memory" {
   type    = string
   default = "8" # Permitido de 1 até 24GB no Always Free.
 }
+
+variable "count_instance" {
+  default = 1 # Define a quantidade de instâncias que serão provisionadas. Limite de duas AMD no Always Free.
+}
