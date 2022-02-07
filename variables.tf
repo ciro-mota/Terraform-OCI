@@ -18,11 +18,12 @@ variable "public_key_path" {
   sensitive = true
 }
 
-variable "compartment_ocid" {
-  sensitive = true
+variable "region" {
 }
 
-variable "region" {
+variable "compartment_name" {
+  type    = string
+  default = "Terraform-OCI-Always-Free" # Especifica um nome para o Compartment que será utilizado. 
 }
 
 variable "instance_name" {

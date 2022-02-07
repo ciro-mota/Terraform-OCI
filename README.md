@@ -27,12 +27,6 @@ Logue-se na sua conta Console da OCI Cloud e em seguida acesse [este endereço](
 
 ![](/images/tenancy.png)
 
-- **compartment_ocid**:
-
-Menu Principal -> Identity & Security -> Compartments -> Crie ou escolha um Compartment que irá abrigar a sua instância. Em **OCID** clique em **Copy** ou **Show**, copie e cole em um bloco de notas.
-
-![](/images/compartment.png)
-
 - **user_ocid**:
 
 Menu Principal -> Identity & Security -> Users -> 	oracleidentitycloudservice/\<<seu-email\>>. Em **OCID** clique em **Copy** ou **Show**, copie e cole em um bloco de notas.
@@ -76,7 +70,6 @@ Este é um passo meramente opcional.
 
 ```bash
 export TF_VAR_tenancy_ocid=<suas credenciais>
-export TF_VAR_compartment_ocid=<suas credenciais>
 export TF_VAR_user_ocid=<suas credenciais>
 export TF_VAR_fingerprint=<suas credenciais>
 export TF_VAR_private_key_path=~/.oci/oci_api_key.pem

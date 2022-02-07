@@ -1,5 +1,5 @@
 data "oci_core_vnic_attachments" "app_vnics" {
-  compartment_id      = var.compartment_ocid
+  compartment_id      = local.compartment_id
   availability_domain = data.oci_identity_availability_domains.ad.availability_domains[0].name
   instance_id         = oci_core_instance.instance[0].id
 }
@@ -8,7 +8,7 @@ data "oci_core_vnic" "app_vnic" {
 }
 resource "oci_core_virtual_network" "test_vcn" {
   cidr_block     = "10.1.0.0/16"
-  compartment_id = var.compartment_ocid
+  compartment_id = local.compartment_id
   display_name   = "testeVCN"
   dns_label      = "testevcn"
 }
@@ -17,18 +17,18 @@ resource "oci_core_subnet" "test_subnet" {
   display_name      = "testeSubnet"
   dns_label         = "testesubnet"
   security_list_ids = [oci_core_security_list.test_security_list.id]
-  compartment_id    = var.compartment_ocid
+  compartment_id    = local.compartment_id
   vcn_id            = oci_core_virtual_network.test_vcn.id
   route_table_id    = oci_core_route_table.test_route_table.id
   dhcp_options_id   = oci_core_virtual_network.test_vcn.default_dhcp_options_id
 }
 resource "oci_core_internet_gateway" "test_internet_gateway" {
-  compartment_id = var.compartment_ocid
+  compartment_id = local.compartment_id
   display_name   = "testeIG"
   vcn_id         = oci_core_virtual_network.test_vcn.id
 }
 resource "oci_core_route_table" "test_route_table" {
-  compartment_id = var.compartment_ocid
+  compartment_id = local.compartment_id
   vcn_id         = oci_core_virtual_network.test_vcn.id
   display_name   = "testeRouteTable"
 
@@ -39,7 +39,7 @@ resource "oci_core_route_table" "test_route_table" {
   }
 }
 resource "oci_core_security_list" "test_security_list" {
-  compartment_id = var.compartment_ocid
+  compartment_id = local.compartment_id
   vcn_id         = oci_core_virtual_network.test_vcn.id
   display_name   = "testeSecurityList"
 
