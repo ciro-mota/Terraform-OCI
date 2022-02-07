@@ -41,13 +41,13 @@ variable "shape_arm" {
 }
 
 variable "shape_arm_cpus" {
-  type    = string
-  default = "4" # Permitido de 1 até 4 OCPU's no Always Free.
+  type    = number
+  default = 2 # Permitido de 1 até 4 OCPU's no Always Free.
 }
 
 variable "shape_arm_memory" {
-  type    = string
-  default = "8" # Permitido de 1 até 24GB no Always Free.
+  type    = number
+  default = 2 # Permitido de 1 até 24GB no Always Free.
 }
 
 variable "count_instance" {

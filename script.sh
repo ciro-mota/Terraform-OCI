@@ -39,7 +39,7 @@ centos7 () {
 # Verifica os sistemas e executa o respectivo script.
 if [[ $(lsb_release -is) = 'Ubuntu' ]] </dev/null >/dev/null 2>&1; then
 	ubuntu
-elif [[ $(cat oracle-release | awk '{ print $1 }') = "Oracle" ]] </dev/null >/dev/null 2>&1; then
+elif [[ $(cat /etc/oracle-release | awk '{ print $1 }') = "Oracle" ]] </dev/null >/dev/null 2>&1; then
 	oraclelinux
 else
 	centos7
