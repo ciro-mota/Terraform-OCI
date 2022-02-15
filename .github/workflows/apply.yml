@@ -31,24 +31,24 @@ jobs:
 
       - name: Terraform Init
         env:
-          TENANCY_OCID:     "${{ secrets.TENANCY_OCID }}"
-          COMPARTMENT_OCID: "${{ secrets.COMPARTMENT_OCID }}" 
-          USER_OCID:        "${{ secrets.USER_OCID }}"
-          FINGERPRINT:      "${{ secrets.FINGERPRINT }}"
-          PRIVATE_KEY:      "${{ secrets.PRIVATE_KEY }}"
-          PUBLIC_KEY:       "${{ secrets.PUBLIC_KEY }}"
-          REGION:           "${{ secrets.REGION }}"
+          TF_VAR_TENANCY_OCID:     "${{ secrets.TF_VAR_TENANCY_OCID }}"
+          TF_VAR_COMPARTMENT_OCID: "${{ secrets.TF_VAR_COMPARTMENT_OCID }}" 
+          TF_VAR_USER_OCID:        "${{ secrets.TF_VAR_USER_OCID }}"
+          TF_VAR_FINGERPRINT:      "${{ secrets.TF_VAR_FINGERPRINT }}"
+          TF_VAR_PRIVATE_KEY:      "${{ secrets.TF_VAR_PRIVATE_KEY }}"
+          TF_VAR_PUBLIC_KEY:       "${{ secrets.TF_VAR_PUBLIC_KEY }}"
+          TF_VAR_REGION:           "${{ secrets.TF_VAR_REGION }}"
         run:  cd ./repository-files/ && ls -la && ~/terraform init
 
       - name: Terraform Plan
         env:
-          TENANCY_OCID:     "${{ secrets.TENANCY_OCID }}"
-          COMPARTMENT_OCID: "${{ secrets.COMPARTMENT_OCID }}" 
-          USER_OCID:        "${{ secrets.USER_OCID }}"
-          FINGERPRINT:      "${{ secrets.FINGERPRINT }}"
-          PRIVATE_KEY:      "${{ secrets.PRIVATE_KEY }}"
-          PUBLIC_KEY:       "${{ secrets.PUBLIC_KEY }}"
-          REGION:           "${{ secrets.REGION }}"
+          TF_VAR_TENANCY_OCID:     "${{ secrets.TF_VAR_TENANCY_OCID }}"
+          TF_VAR_COMPARTMENT_OCID: "${{ secrets.TF_VAR_COMPARTMENT_OCID }}" 
+          TF_VAR_USER_OCID:        "${{ secrets.TF_VAR_USER_OCID }}"
+          TF_VAR_FINGERPRINT:      "${{ secrets.TF_VAR_FINGERPRINT }}"
+          TF_VAR_PRIVATE_KEY:      "${{ secrets.TF_VAR_PRIVATE_KEY }}"
+          TF_VAR_PUBLIC_KEY:       "${{ secrets.TF_VAR_PUBLIC_KEY }}"
+          TF_VAR_REGION:           "${{ secrets.TF_VAR_REGION }}"
         run:  cd  ./repository-files/ && ~/terraform plan 
 
       - name: Wait Before Apply
@@ -56,11 +56,11 @@ jobs:
 
       - name: Terraform Apply
         env:
-          TENANCY_OCID:     "${{ secrets.TENANCY_OCID }}"
-          COMPARTMENT_OCID: "${{ secrets.COMPARTMENT_OCID }}" 
-          USER_OCID:        "${{ secrets.USER_OCID }}"
-          FINGERPRINT:      "${{ secrets.FINGERPRINT }}"
-          PRIVATE_KEY:      "${{ secrets.PRIVATE_KEY }}"
-          PUBLIC_KEY:       "${{ secrets.PUBLIC_KEY }}"
-          REGION:           "${{ secrets.REGION }}"
+          TF_VAR_TENANCY_OCID:     "${{ secrets.TF_VAR_TENANCY_OCID }}"
+          TF_VAR_COMPARTMENT_OCID: "${{ secrets.TF_VAR_COMPARTMENT_OCID }}" 
+          TF_VAR_USER_OCID:        "${{ secrets.TF_VAR_USER_OCID }}"
+          TF_VAR_FINGERPRINT:      "${{ secrets.TF_VAR_FINGERPRINT }}"
+          TF_VAR_PRIVATE_KEY:      "${{ secrets.TF_VAR_PRIVATE_KEY }}"
+          TF_VAR_PUBLIC_KEY:       "${{ secrets.TF_VAR_PUBLIC_KEY }}"
+          TF_VAR_REGION:           "${{ secrets.TF_VAR_REGION }}"
         run:  cd ./repository-files/ && ~/terraform apply -auto-approve
