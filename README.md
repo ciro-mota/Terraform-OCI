@@ -50,10 +50,6 @@ Com isso será gerado o seu **fingerprint**, copie e cole em um bloco de notas.
 
 ![](/images/fingerprint.png)
 
-- **region**:
-
-Certifique-se de qual é a Região utilizada na sua conta. Você consegue esse valor através do campo "Tenancy details", executado no primeiro passo.
-
 - **SSH**:
 
 É necessário um par de chaves para acesso SSH à instância. Gere um novo par com o comando `ssh-keygen -b 2048 -t rsa`.
@@ -74,7 +70,6 @@ export TF_VAR_user_ocid=<suas credenciais>
 export TF_VAR_fingerprint=<suas credenciais>
 export TF_VAR_private_key_path=~/.oci/oci_api_key.pem
 export TF_VAR_public_key_path=$(cat /home/seu-usuário/.ssh/id_rsa.pub)
-export TF_VAR_region=<suas credenciais>
 ```
 
 ## Execução:

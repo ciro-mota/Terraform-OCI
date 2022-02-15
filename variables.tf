@@ -18,9 +18,6 @@ variable "public_key_path" {
   sensitive = true
 }
 
-variable "region" {
-}
-
 variable "compartment_name" {
   type    = string
   default = "Terraform-OCI-Always-Free" # Especifica um nome para o Compartment que será utilizado. 
@@ -43,12 +40,12 @@ variable "shape_arm" {
 
 variable "shape_arm_cpus" {
   type    = number
-  default = 2 # Permitido de 1 até 4 OCPU's no Always Free.
+  default = 8 # Permitido de 1 até 4 OCPU's no Always Free.
 }
 
 variable "shape_arm_memory" {
   type    = number
-  default = 2 # Permitido de 1 até 24GB no Always Free.
+  default = 8 # Permitido de 1 até 24GB no Always Free.
 }
 
 variable "count_instance" {

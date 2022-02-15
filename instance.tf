@@ -1,46 +1,3 @@
-data "oci_core_images" "ubuntu" {
-  compartment_id   = local.compartment_id
-  operating_system = "Canonical Ubuntu"
-  filter {
-    name   = "display_name"
-    values = ["^Canonical-Ubuntu-20.04-([\\.0-9-]+)$"]
-    regex  = true
-  }
-}
-data "oci_core_images" "ubuntu_aarch64" {
-  compartment_id   = local.compartment_id
-  operating_system = "Canonical Ubuntu"
-  filter {
-    name   = "display_name"
-    values = ["^Canonical-Ubuntu-20.04-aarch64-([\\.0-9-]+)$"]
-    regex  = true
-  }
-}
-data "oci_core_images" "oraclelinux" {
-  compartment_id   = local.compartment_id
-  operating_system = "Oracle Linux"
-
-  filter {
-    name   = "display_name"
-    values = ["^Oracle-Linux-8.5-([\\.0-9-]+)$"]
-    regex  = true
-  }
-}
-data "oci_core_images" "centos_7" {
-  compartment_id           = local.compartment_id
-  operating_system         = "CentOS"
-  operating_system_version = "7"
-  sort_by                  = "TIMECREATED"
-}
-
-locals {
-  compartment_id = oci_identity_compartment.compartment-name.id
-}
-
-data "oci_identity_availability_domains" "compartment-name" {
-  compartment_id = local.compartment_id
-}
-
 resource "oci_identity_compartment" "compartment-name" {
   name          = var.compartment_name
   description   = var.compartment_name
@@ -48,7 +5,7 @@ resource "oci_identity_compartment" "compartment-name" {
 }
 
 resource "oci_core_instance" "instance" {
-  availability_domain = data.oci_identity_availability_domains.ad.availability_domains[0].name
+  availability_domain = data.oci_identity_availability_domains.ADs.availability_domains[0].name
   compartment_id      = local.compartment_id
   count               = var.count_instance
   display_name        = var.instance_name
