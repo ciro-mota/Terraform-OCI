@@ -15,6 +15,16 @@ jobs:
 
       - name: Install Terraform
         run: |
+
+          mkdir ~/.oci
+          echo "[DEFAULT]" >> ~/.oci/config
+          echo "tenancy=${{ secrets.TF_VAR_TENANCY_OCID }}" >> ~/.oci/config
+          echo "user=${{ secrets.TF_VAR_USER_OCID }}" >> ~/.oci/config
+          echo "fingerprint=${{ secrets.TF_VAR_FINGERPRINT }}" >> ~/.oci/config
+          echo "region=${{ secrets.TF_VAR_REGION }}" >> ~/.oci/config          
+          echo "key_file=~/.oci/key.pem" >> ~/.oci/config
+          echo "${{ secrets.TF_VAR_PRIVATE_KEY }}" >> ~/.oci/key.pem
+
           cd ~
           sudo apt update
           sudo apt install -y unzip wget
@@ -30,37 +40,13 @@ jobs:
           path: ./repository-files/
 
       - name: Terraform Init
-        env:
-          TF_VAR_TENANCY_OCID:     "${{ secrets.TF_VAR_TENANCY_OCID }}"
-          TF_VAR_COMPARTMENT_OCID: "${{ secrets.TF_VAR_COMPARTMENT_OCID }}" 
-          TF_VAR_USER_OCID:        "${{ secrets.TF_VAR_USER_OCID }}"
-          TF_VAR_FINGERPRINT:      "${{ secrets.TF_VAR_FINGERPRINT }}"
-          TF_VAR_PRIVATE_KEY:      "${{ secrets.TF_VAR_PRIVATE_KEY }}"
-          TF_VAR_PUBLIC_KEY:       "${{ secrets.TF_VAR_PUBLIC_KEY }}"
-          TF_VAR_REGION:           "${{ secrets.TF_VAR_REGION }}"
         run:  cd ./repository-files/ && ls -la && ~/terraform init
 
       - name: Terraform Plan
-        env:
-          TF_VAR_TENANCY_OCID:     "${{ secrets.TF_VAR_TENANCY_OCID }}"
-          TF_VAR_COMPARTMENT_OCID: "${{ secrets.TF_VAR_COMPARTMENT_OCID }}" 
-          TF_VAR_USER_OCID:        "${{ secrets.TF_VAR_USER_OCID }}"
-          TF_VAR_FINGERPRINT:      "${{ secrets.TF_VAR_FINGERPRINT }}"
-          TF_VAR_PRIVATE_KEY:      "${{ secrets.TF_VAR_PRIVATE_KEY }}"
-          TF_VAR_PUBLIC_KEY:       "${{ secrets.TF_VAR_PUBLIC_KEY }}"
-          TF_VAR_REGION:           "${{ secrets.TF_VAR_REGION }}"
         run:  cd  ./repository-files/ && ~/terraform plan 
 
       - name: Wait Before Apply
         run:  sleep  "${{ github.event.inputs.wait-time }}" || sleep "1m"
 
       - name: Terraform Apply
-        env:
-          TF_VAR_TENANCY_OCID:     "${{ secrets.TF_VAR_TENANCY_OCID }}"
-          TF_VAR_COMPARTMENT_OCID: "${{ secrets.TF_VAR_COMPARTMENT_OCID }}" 
-          TF_VAR_USER_OCID:        "${{ secrets.TF_VAR_USER_OCID }}"
-          TF_VAR_FINGERPRINT:      "${{ secrets.TF_VAR_FINGERPRINT }}"
-          TF_VAR_PRIVATE_KEY:      "${{ secrets.TF_VAR_PRIVATE_KEY }}"
-          TF_VAR_PUBLIC_KEY:       "${{ secrets.TF_VAR_PUBLIC_KEY }}"
-          TF_VAR_REGION:           "${{ secrets.TF_VAR_REGION }}"
         run:  cd ./repository-files/ && ~/terraform apply -auto-approve
