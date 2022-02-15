@@ -1,0 +1,66 @@
+name: Apply Stack Instances
+
+on: 
+  workflow_dispatch:
+    inputs:
+      wait-time:
+        description: 'Time to wait between plan and apply: 30s, 5m, 1h'
+        required: true
+        default: '1m'
+
+jobs:
+  terraform:
+    runs-on: ubuntu-20.04
+    steps:
+
+      - name: Install Terraform
+        run: |
+          cd ~
+          sudo apt update
+          sudo apt install -y unzip wget
+          sudo wget "https://releases.hashicorp.com/terraform/$(curl -s https://checkpoint-api.hashicorp.com/v1/check/terraform | jq -r -M '.current_version')/terraform_$(curl -s https://checkpoint-api.hashicorp.com/v1/check/terraform | jq -r -M '.current_version')_linux_amd64.zip"
+          sudo unzip terraform*.zip
+          sudo chmod +x terraform
+          terraform --version
+
+      - name: Checkout Respository
+        uses: actions/checkout@v2
+        with:
+          ref: main
+          path: ./repository-files/
+
+      - name: Terraform Init
+        env:
+          TENANCY_OCID:     "${{ secrets.TENANCY_OCID }}"
+          COMPARTMENT_OCID: "${{ secrets.COMPARTMENT_OCID }}" 
+          USER_OCID:        "${{ secrets.USER_OCID }}"
+          FINGERPRINT:      "${{ secrets.FINGERPRINT }}"
+          PRIVATE_KEY:      "${{ secrets.PRIVATE_KEY }}"
+          PUBLIC_KEY:       "${{ secrets.PUBLIC_KEY }}"
+          REGION:           "${{ secrets.REGION }}"
+        run:  cd ./repository-files/ && ls -la && ~/terraform init
+
+      - name: Terraform Plan
+        env:
+          TENANCY_OCID:     "${{ secrets.TENANCY_OCID }}"
+          COMPARTMENT_OCID: "${{ secrets.COMPARTMENT_OCID }}" 
+          USER_OCID:        "${{ secrets.USER_OCID }}"
+          FINGERPRINT:      "${{ secrets.FINGERPRINT }}"
+          PRIVATE_KEY:      "${{ secrets.PRIVATE_KEY }}"
+          PUBLIC_KEY:       "${{ secrets.PUBLIC_KEY }}"
+          REGION:           "${{ secrets.REGION }}"
+        run:  cd  ./repository-files/ && ~/terraform plan 
+
+      - name: Wait Before Apply
+        run:  sleep  "${{ github.event.inputs.wait-time }}" || sleep "1m"
+
+      - name: Terraform Apply
+        env:
+          TENANCY_OCID:     "${{ secrets.TENANCY_OCID }}"
+          COMPARTMENT_OCID: "${{ secrets.COMPARTMENT_OCID }}" 
+          USER_OCID:        "${{ secrets.USER_OCID }}"
+          FINGERPRINT:      "${{ secrets.FINGERPRINT }}"
+          PRIVATE_KEY:      "${{ secrets.PRIVATE_KEY }}"
+          PUBLIC_KEY:       "${{ secrets.PUBLIC_KEY }}"
+          REGION:           "${{ secrets.REGION }}"
+        run:  cd ./repository-files/ && ~/terraform apply -auto-approve
