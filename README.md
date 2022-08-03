@@ -82,3 +82,9 @@ export TF_VAR_public_key_path=$(cat /home/seu-usuário/.ssh/id_rsa.pub)
 ## Observação:
 
 Caso ocorra algum erro de permissão na execução, proceda com a [instalação do OCI-CLI conforme documentação](https://www.oracle.com/br/technical-resources/articles/cloudcomp/utilizando-oci-cli-p1.html).
+
+## Apoio
+
+Se você gosta deste trabalho, por favor me dê uma estrela no GitHub e considere apoiá-lo:
+
+[![PayPal](https://img.shields.io/badge/PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white)](https://www.paypal.com/donate/?business=VUS6R8TX53NTS&no_recurring=0&currency_code=BRL)
