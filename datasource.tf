@@ -22,7 +22,7 @@ data "oci_core_images" "ubuntu22" {
   }
 }
 
-data "oci_core_images" "ubuntu_aarch64" {
+data "oci_core_images" "ubuntu20_aarch64" {
   compartment_id   = local.compartment_id
   operating_system = "Canonical Ubuntu"
   sort_by          = "TIMECREATED"
@@ -34,7 +34,19 @@ data "oci_core_images" "ubuntu_aarch64" {
   }
 }
 
-data "oci_core_images" "oraclelinux" {
+data "oci_core_images" "ubuntu22_aarch64" {
+  compartment_id   = local.compartment_id
+  operating_system = "Canonical Ubuntu"
+  sort_by          = "TIMECREATED"
+
+  filter {
+    name   = "display_name"
+    values = ["^Canonical-Ubuntu-22.04-aarch64-([\\.0-9-]+)$"]
+    regex  = true
+  }
+}
+
+data "oci_core_images" "oraclelinux8" {
   compartment_id   = local.compartment_id
   operating_system = "Oracle Linux"
   sort_by          = "TIMECREATED"
@@ -42,6 +54,18 @@ data "oci_core_images" "oraclelinux" {
   filter {
     name   = "display_name"
     values = ["^Oracle-Linux-8([\\.0-9\\-\\0-9\\.]+)$"]
+    regex  = true
+  }
+}
+
+data "oci_core_images" "oraclelinux9" {
+  compartment_id   = local.compartment_id
+  operating_system = "Oracle Linux"
+  sort_by          = "TIMECREATED"
+
+  filter {
+    name   = "display_name"
+    values = ["^Oracle-Linux-9([\\.0-9\\-\\0-9\\.]+)$"]
     regex  = true
   }
 }
