@@ -1,39 +1,51 @@
+</p>
+
+<table align="right">
+ <tr><td><a href="https://github.com/ciro-mota/Terraform-OCI/blob/main/README.md">:us: English</a></td></tr>
+ <tr><td><a href="https://github.com/ciro-mota/Terraform-OCI/blob/main/README.pt-br.md">:brazil: Português</a></td></tr>
+</table>
+
 # Terraform-OCI
 
 ![image](https://img.shields.io/badge/Oracle-F80000?style=for-the-badge&logo=oracle&logoColor=black) 
 ![image](https://img.shields.io/badge/terraform-%235835CC.svg?style=for-the-badge&logo=terraform&logoColor=white)
-![image](https://img.shields.io/badge/Shell_Script-121011?style=for-the-badge&logo=gnu-bash&logoColor=white)
-![image](https://img.shields.io/badge/Cent%20OS-262577?style=for-the-badge&logo=CentOS&logoColor=white)
 ![image](https://img.shields.io/badge/Red%20Hat-EE0000?style=for-the-badge&logo=redhat&logoColor=white)
 ![image](https://img.shields.io/badge/Ubuntu-E95420?style=for-the-badge&logo=ubuntu&logoColor=white)
+![image](https://img.shields.io/badge/Shell_Script-121011?style=for-the-badge&logo=gnu-bash&logoColor=white)
+![Last Commit](https://img.shields.io/github/last-commit/ciro-mota/Terraform-OCI?style=for-the-badge)
 
-## Disclaimer:
 
-Este Git destina-se aos estudos do Terraform com a Oracle OCI. Modificações serão feitas à medida que os estudos forem avançando e descobertas forem sendo feitas.
+Provision an instance on Oracle OCI with **_Always Free_** features and standard machine type. You will be able to choose between Ubuntu 20.04 or 22.04 or Oracle Linux images.
 
-Pull Requests também são muito bem-vindos.
+## Support
 
-## Propósito:
+If you like this work, please give me a star on GitHub and consider supporting it:
 
-Este código provisiona uma instância na OCI com o Ubuntu 20.04 e tipo de máquina padrão _Always Free_.
+[![PayPal](https://img.shields.io/badge/PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white)](https://www.paypal.com/donate/?business=VUS6R8TX53NTS&no_recurring=0&currency_code=BRL)
 
-## Antes de Executar:
+## Requirements:
 
-1. É necessário obter algumas credenciais para preencher os valores das variáveis acima para a execução do Terraform. Esses valores são obtidos diretamente do Console da OCI Cloud:
+* Terraform.
+
+* Proceed with [OCI-CLI installation as per official documentation](https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/cliinstall.htm).
+
+## Before executing:
+
+1. It is necessary to get some credentials to fill in the some variables values for Terraform execution. These values are taken directly from the OCI Cloud Console:
 
 - **tenancy_ocid**:
 
-Logue-se na sua conta Console da OCI Cloud e em seguida acesse [este endereço](https://cloud.oracle.com/tenancy). Em **OCID** clique em **Copy** ou **Show**, copie e cole em um bloco de notas.
+Login into your OCI Cloud Console account and then go to [this address](https://cloud.oracle.com/tenancy). In **OCID** click on **Copy** or **Show**, copy and paste into a notepad.
 
 ![](/images/tenancy.png)
 
 - **user_ocid**:
 
-Menu Principal -> Identity & Security -> Users -> 	oracleidentitycloudservice/\<<seu-email\>>. Em **OCID** clique em **Copy** ou **Show**, copie e cole em um bloco de notas.
+**Main Menu** » **Identity & Security** » **Users** » **oracleidentitycloudservice/\<<your-email\>>**. In **OCID** click on **Copy** or **Show**, copy and paste into a notepad.
 
 ![](/images/user.png)
 
-- Execute os comandos abaixo para geração de um par de chaves necessário para autenticação:
+- Run the commands below to generate a key pair required for authentication:
 
 ```bash
 mkdir ~/.oci
@@ -44,47 +56,34 @@ openssl rsa -pubout -in ~/.oci/oci_api_key.pem -out ~/.oci/oci_api_key_public.pe
 
 - **fingerprint**:
 
-Capture a `public_key` gerada no passo anterior (`cat ~/.oci/oci_api_key_public.pem`) -> acesse Menu Principal -> Identity & Security -> Users -> 	oracleidentitycloudservice/\<<seu-email\>> -> API Keys -> Add API Key -> Paste Public Key e cole o conteúdo da chave pública.
+Capture the `public_key` generated in the previous step (`cat ~/.oci/oci_api_key_public.pem`) » access **Main Menu** » **Identity & Security** » **Users** » **oracleidentitycloudservice/\<<your-email\>>** » **API Keys** » **Add API Key** » **Paste Public Key** and paste the public key content.
 
-Com isso será gerado o seu **fingerprint**, copie e cole em um bloco de notas.
+This will generate your **fingerprint**, copy and paste it into a notepad.
 
 ![](/images/fingerprint.png)
 
 - **SSH**:
 
-É necessário um par de chaves para acesso SSH à instância. Gere um novo par com o comando `ssh-keygen -b 2048 -t rsa`.
+A key pair may be required for SSH access to the instance. If not, generate a new pair with the command `ssh-keygen -b 2048 -t rsa`.
 
-- **State Remoto**
+- **Remote State**
 
-Você pode querer armazenar os seus *states* remotamente em um bucket na OCI. Para isso Menu Principal -> Storage -> Object Storage & Archive Storage -> crie um *Bucket* de nome único -> Create Pre-Authenticated Request -> Permit object reads and writes e copie a URL fornecida.
+You might want to store your *states* remotely in an OCI bucket. For this **Main Menu** » **Storage** » **Object Storage & Archive Storage** » create a uniquely named *Bucket* » **Create Pre-Authenticated Request** » **Permit object reads and writes**, and copy the given URL.
 
-No arquivo `main.tf` descomente as linhas de 8 a 11 e insira a URL fornecida no campo `address`.
+In the `main.tf` file, uncomment lines 9 to 12 and insert the given URL in the `address` field. This is a purely optional step.
 
-Este é um passo meramente opcional.
-
-2. Adicione algumas variáveis ao seu arquivo `.bashrc` ou `.zshrc` preenchendo-as com os valores obtidos anteriormente:
+2. Add some variables to your `.bashrc` or `.zshrc` file by filling them in with the values obtained earlier:
 
 ```bash
-export TF_VAR_tenancy_ocid=<suas credenciais>
-export TF_VAR_user_ocid=<suas credenciais>
-export TF_VAR_fingerprint=<suas credenciais>
+export TF_VAR_tenancy_ocid=<your credencials>
+export TF_VAR_user_ocid=<your credencials>
+export TF_VAR_fingerprint=<your credencials>
 export TF_VAR_private_key_path=~/.oci/oci_api_key.pem
-export TF_VAR_public_key_path=$(cat /home/seu-usuário/.ssh/id_rsa.pub)
+export TF_VAR_public_key_path=$(cat /home/your-username/.ssh/id_rsa.pub)
 ```
 
-## Execução:
+## Execution:
 
-1. Instale o Terraform pelo seu método preferido.
-2. Clone este Git.
-3. Modifique se necessário.
-4. Rode os comandos `terraform init`, `terraform plan -out= nome-do-plano` e `terraform apply`. Por fim, `terraform destroy` para exclusão do que foi criado na OCI.
-
-## Observação:
-
-Caso ocorra algum erro de permissão na execução, proceda com a [instalação do OCI-CLI conforme documentação](https://www.oracle.com/br/technical-resources/articles/cloudcomp/utilizando-oci-cli-p1.html).
-
-## Apoio
-
-Se você gosta deste trabalho, por favor me dê uma estrela no GitHub e considere apoiá-lo:
-
-[![PayPal](https://img.shields.io/badge/PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white)](https://www.paypal.com/donate/?business=VUS6R8TX53NTS&no_recurring=0&currency_code=BRL)
+1. Clone this repo.
+2. By default an instance with **Ubuntu 22.04** with AMD hardware will be provisioned, if you want another OS or an ARM machine, modify the `variables.tf` and `main.tf` files if you wish.
+3. Run `terraform init`, `terraform plan -out= name-of-the-plan` and `terraform apply`. At the end, `terraform destroy` for deletion of what was created in the OCI.
