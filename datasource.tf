@@ -46,13 +46,6 @@ data "oci_core_images" "oraclelinux" {
   }
 }
 
-data "oci_core_images" "centos_7" {
-  compartment_id           = local.compartment_id
-  operating_system         = "CentOS"
-  operating_system_version = "7"
-  sort_by                  = "TIMECREATED"
-}
-
 data "oci_identity_availability_domains" "ADs" {
   compartment_id = local.compartment_id
 }
