@@ -19,13 +19,21 @@ variable "public_key_path" {
 }
 
 variable "compartment_name" {
-  type    = string
-  default = "Terraform-OCI-Always-Free" # Specifies a name for the Compartment that will be used.
+  type        = string
+  default     = "Terraform-OCI-Always-Free"
+  description = "Specifies a name for the Compartment that will be used."
 }
 
 variable "instance_name" {
-  type    = string
-  default = "Always_Free" # Rename the instance name as you like.
+  type        = string
+  default     = "Always_Free"
+  description = "Rename the instance name as you like."
+}
+
+variable "hostname_label" {
+  type        = string
+  default     = "Instance-Always-Free"
+  description = "Rename the instance label as you like."
 }
 
 variable "shape_amd" {
@@ -39,15 +47,18 @@ variable "shape_arm" {
 }
 
 variable "shape_arm_cpus" {
-  type    = number
-  default = 8 # Allowed from 1 to 4 OCPU's on Always Free.
+  type        = number
+  default     = 8
+  description = "Allowed from 1 to 4 OCPU's on Always Free."
 }
 
 variable "shape_arm_memory" {
-  type    = number
-  default = 8 # Allowed from 1 to 24GB in Always Free.
+  type        = number
+  default     = 8
+  description = "Allowed from 1 to 24GB in Always Free."
 }
 
 variable "count_instance" {
-  default = 1 # Defines the number of instances that will be provisioned. Two AMD limit on Always Free.
+  default     = 1
+  description = "Defines the number of instances that will be provisioned. Two AMD limit on Always Free."
 }
