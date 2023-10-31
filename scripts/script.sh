@@ -14,7 +14,7 @@ ubuntu() {
 	sudo apt update
 	sudo apt upgrade -y
 	sudo apt install nginx -y
-	echo -e "<h1>It Works</h1>" >/var/www/html/index*.html
+	echo -e "<h1>It Works</h1>" | sudo tee /var/www/html/index*.html
 	sudo iptables -D INPUT -j REJECT --reject-with icmp-host-prohibited && sudo netfilter-persistent save
 }
 
@@ -22,15 +22,15 @@ ubuntu() {
 oraclelinux() {
 
 	inst() {
-		sudo dnf update -y &&
-			sudo dnf install -y nginx
+		sudo dnf update -y
+		sudo dnf install -y nginx
 	}
 
 	firewallrule() {
-		sudo firewall-cmd --permanent --zone=public --add-service=http &&
-			sudo firewall-cmd --permanent --zone=public --add-port=80/tcp &&
-			sudo firewall-cmd --permanent --zone=public --add-port=443/tcp &&
-			sudo firewall-cmd --reload
+		sudo firewall-cmd --permanent --zone=public --add-service=http
+		sudo firewall-cmd --permanent --zone=public --add-port=80/tcp
+		sudo firewall-cmd --permanent --zone=public --add-port=443/tcp
+		sudo firewall-cmd --reload
 	}
 
 	mods() {
@@ -48,13 +48,12 @@ oraclelinux() {
 	firewallrule
 	mods
 	servs
-
 }
 
 # Checks the systems and runs the respective script.
 if [[ $(lsb_release -is) = 'Ubuntu' ]] </dev/null >/dev/null 2>&1; then
 	ubuntu
 else
-	[[ $(grep -e Oracle /etc/oracle-release | awk '{ print $1 }') = "Oracle" ]] </dev/null >/dev/null 2>&1
+	[[ $(cat /etc/*release | head -1 | awk '{ print $1 }') =~ ^(Oracle|AlmaLinux)$ ]] </dev/null >/dev/null 2>&1
 	oraclelinux
 fi
