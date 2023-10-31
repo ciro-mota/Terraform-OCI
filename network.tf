@@ -9,13 +9,13 @@ data "oci_core_vnic" "app_vnic" {
 resource "oci_core_virtual_network" "test_vcn" {
   cidr_block     = "10.1.0.0/16"
   compartment_id = local.compartment_id
-  display_name   = "testeVCN"
-  dns_label      = "testevcn"
+  display_name   = "testVCN"
+  dns_label      = "testvcn"
 }
 resource "oci_core_subnet" "test_subnet" {
   cidr_block        = "10.1.20.0/24"
-  display_name      = "testeSubnet"
-  dns_label         = "testesubnet"
+  display_name      = "testSubnet"
+  dns_label         = "testsubnet"
   security_list_ids = [oci_core_security_list.test_security_list.id]
   compartment_id    = local.compartment_id
   vcn_id            = oci_core_virtual_network.test_vcn.id
@@ -24,13 +24,13 @@ resource "oci_core_subnet" "test_subnet" {
 }
 resource "oci_core_internet_gateway" "test_internet_gateway" {
   compartment_id = local.compartment_id
-  display_name   = "testeIG"
+  display_name   = "testIG"
   vcn_id         = oci_core_virtual_network.test_vcn.id
 }
 resource "oci_core_route_table" "test_route_table" {
   compartment_id = local.compartment_id
   vcn_id         = oci_core_virtual_network.test_vcn.id
-  display_name   = "testeRouteTable"
+  display_name   = "testRouteTable"
 
   route_rules {
     destination       = "0.0.0.0/0"
@@ -41,7 +41,7 @@ resource "oci_core_route_table" "test_route_table" {
 resource "oci_core_security_list" "test_security_list" {
   compartment_id = local.compartment_id
   vcn_id         = oci_core_virtual_network.test_vcn.id
-  display_name   = "testeSecurityList"
+  display_name   = "testSecurityList"
 
   egress_security_rules {
     protocol    = "6"
