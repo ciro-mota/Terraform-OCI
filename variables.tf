@@ -48,7 +48,7 @@ variable "shape_arm" {
 
 variable "shape_arm_cpus" {
   type        = number
-  default     = 8
+  default     = 4
   description = "Allowed from 1 to 4 OCPU's on Always Free."
 }
 
