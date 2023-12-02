@@ -1,3 +1,8 @@
 output "public-ip-for-compute-instance" {
-  value = oci_core_instance.instance[0].public_ip
+  description = "Public IP Address of instance."
+  value = {
+    for instance in oci_core_instance.instance :
+    instance.display_name => instance.public_ip
+  }
+  sensitive = false
 }
