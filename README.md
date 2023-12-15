@@ -4,6 +4,7 @@
     <img alt="License" src="https://img.shields.io/badge/License-GPLv3-blue.svg?style=for-the-badge" />
     <img alt="Oracle" src="https://img.shields.io/badge/Oracle-F80000?style=for-the-badge&logo=oracle&logoColor=black" />
     <img alt="Terraform" src="https://img.shields.io/badge/terraform-%235835CC.svg?style=for-the-badge&logo=terraform&logoColor=white" />
+    <img alt="Ansible" src="https://img.shields.io/badge/Ansible-000000?style=for-the-badge&logo=ansible&logoColor=white" />
     <img alt="Red Hat" src="https://img.shields.io/badge/Red%20Hat-EE0000?style=for-the-badge&logo=redhat&logoColor=white" />
     <img alt="Ubuntu" src="https://img.shields.io/badge/Ubuntu-E95420?style=for-the-badge&logo=ubuntu&logoColor=white" />
     <img alt="Shell Script" src="https://img.shields.io/badge/Shell_Script-121011?style=for-the-badge&logo=gnu-bash&logoColor=white" />
@@ -77,6 +78,12 @@ export TF_VAR_public_key_path=$(cat /home/your-username/.ssh/id_rsa.pub)
 2. By default an instance with **Ubuntu 22.04** with AMD hardware will be provisioned, if you want another OS modify the `variables.tf` file and `instance.tf` file on lines `24` to `26`, if you wish.
 3. If you want to use ARM instances, use the `instance-arm.tf` file instead of the `instance.tf` file.
 4. Run `terraform init`, `terraform plan -out= name-of-the-plan` and `terraform apply`. At the end, `terraform destroy` for deletion of what was created in the OCI.
+
+## 🔧 Post Install Scripts
+
+You can also apply post-installation scripts to your instance through. This project counts as example scripts for `nginx` provisioning provided by Ansible Galaxy.
+
+To work with these settings, uncomment line `31` in the `instance.tf` file.
 
 ## 🎁 Sponsoring
 
