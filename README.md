@@ -78,7 +78,7 @@ export TF_VAR_public_key_path=$(cat /home/your-username/.ssh/<your-pub-key>.pub)
 
 ## 💻 Usage
 
-> [!NOTE]\ 
+> [!NOTE]\
 > You will be able to choose between Ubuntu 20.04 or 22.04 or Oracle Linux or AlmaLinux (Marketplace) images.
 
 1. Clone this repo.
