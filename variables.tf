@@ -32,13 +32,8 @@ variable "instance_name" {
 
 variable "hostname_label" {
   type        = string
-  default     = "Instance-Always-Free"
+  default     = "Always-Free"
   description = "Rename the instance label as you like."
-}
-
-variable "shape_amd" {
-  type    = string
-  default = "VM.Standard.E2.1.Micro"
 }
 
 variable "shape_arm" {
