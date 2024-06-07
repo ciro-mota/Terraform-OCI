@@ -4,6 +4,12 @@ on:
   push:
     paths:
       - '**.tf'
+  workflow_dispatch:
+    inputs:
+      input:
+        description: "Manual Execution"
+        required: true
+        default: "Manual Execution"
 
 jobs:
   check-terraform:
@@ -17,7 +23,7 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
-          terraform_version: "1.6.2"
+          terraform_version: "1.7.2"
 
       - name: Initialize Terraform
         run: terraform init
