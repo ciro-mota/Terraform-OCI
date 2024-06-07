@@ -25,7 +25,7 @@ resource "oci_core_instance" "instance" {
 
   source_details {
     source_type = "image"
-     source_id   = data.oci_core_images.ubuntu22_aarch64.images.0.id
+    source_id   = data.oci_core_images.ubuntu22_aarch64.images.0.id
     # source_id = data.oci_core_images.ubuntu20_aarch64.images.0.id # Comment above line and uncomment this one to use image from Ubuntu 20.04 aarch64.
     # source_id   = data.oci_core_images.oraclelinux9_aarch64.images.0.id # Uncomment to use image from Oracle Linux aarch64.
     #source_id = lookup(data.oci_core_app_catalog_listing_resource_version.AlmaLinux_App_Catalog_Listing_Resource_Version, "listing_resource_id") # Uncomment to use image from AlmaLinux aarch64 from Marketplace.
