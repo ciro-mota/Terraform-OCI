@@ -9,7 +9,12 @@ resource "oci_core_instance" "instance" {
   compartment_id      = local.compartment_id
   count               = var.count_instance
   display_name        = "${var.instance_name}-${count.index}"
-  shape               = var.shape_amd
+  shape               = var.shape_arm
+
+  shape_config {
+    ocpus         = var.shape_arm_cpus
+    memory_in_gbs = var.shape_arm_memory
+  }
 
   create_vnic_details {
     subnet_id        = oci_core_subnet.test_subnet.id
@@ -20,10 +25,10 @@ resource "oci_core_instance" "instance" {
 
   source_details {
     source_type = "image"
-    source_id   = data.oci_core_images.ubuntu22.images.0.id
-    # source_id = data.oci_core_images.ubuntu20.images.0.id # Comment above line and uncomment this one to use image from Ubuntu 20.04.
-    # source_id = data.oci_core_images.oraclelinux9.images.0.id # Comment above line and uncomment this one to use image from Oracle Linux 9.x.
-    # source_id = data.oci_core_images.oraclelinux8.images.0.id # Comment above line and uncomment this one to use image from Oracle Linux 8.x.
+     source_id   = data.oci_core_images.ubuntu22_aarch64.images.0.id
+    # source_id = data.oci_core_images.ubuntu20_aarch64.images.0.id # Comment above line and uncomment this one to use image from Ubuntu 20.04 aarch64.
+    # source_id   = data.oci_core_images.oraclelinux9_aarch64.images.0.id # Uncomment to use image from Oracle Linux aarch64.
+    #source_id = lookup(data.oci_core_app_catalog_listing_resource_version.AlmaLinux_App_Catalog_Listing_Resource_Version, "listing_resource_id") # Uncomment to use image from AlmaLinux aarch64 from Marketplace.
   }
 
   metadata = {
