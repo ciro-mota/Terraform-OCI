@@ -1,16 +1,12 @@
 #!/bin/bash
-#
-# Modify this script as needed to apply your deployment as soon as the instance starts.
-#
 
 if [ -f /etc/debian_version ]; then
   export DEBIAN_FRONTEND=noninteractive
   apt-get -q update && apt-get -qy install ansible
 
   firewallDebRule() {
-		echo iptables-persistent iptables-persistent/autosave_v4 boolean true | sudo debconf-set-selections
-		echo iptables-persistent iptables-persistent/autosave_v6 boolean true | sudo debconf-set-selections
-		sudo iptables -D INPUT -j REJECT --reject-with icmp-host-prohibited && sudo netfilter-persistent save
+		sudo iptables -I INPUT -p tcp --dport 80 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+    sudo iptables -I OUTPUT -p tcp --sport 80 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 	}
 
 	firewallDebRule
@@ -71,9 +67,9 @@ ansible-galaxy install -r requirements.yml
 ansible-playbook playbook.yml
 
 if [ -f /etc/debian_version ]; then
-  printf "<h1>DigitalOcean - It Works</h1>" > /var/www/html/index.nginx-debian.html
+  printf "<h1>Oracle OCI - It Works</h1>" | sudo tee /var/www/html/index.nginx-debian.html
 elif [ -f /etc/redhat-release ]; then
-  printf "<h1>DigitalOcean - It Works</h1>" > /usr/share/nginx/html/index.html
+  printf "<h1>Oracle OCI - It Works</h1>" | sudo tee /usr/share/nginx/html/index.html
 else
-  echo "Unsuported Distro."
+  printf "Unsuported Distro."
 fi
