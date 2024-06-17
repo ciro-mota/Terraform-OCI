@@ -33,7 +33,7 @@ resource "oci_core_instance" "instance" {
 
   metadata = {
     ssh_authorized_keys = var.public_key_path
-    # user_data           = "${base64encode(file("./scripts/script.sh"))}" # Uncomment this line to use an instance deployment script. View and adapt the contents of the attached script.sh file.
+    # user_data           = "${base64encode(file("./scripts/script.sh"))}" # Uncomment this line to use an instance deployment script.
   }
 
 }
