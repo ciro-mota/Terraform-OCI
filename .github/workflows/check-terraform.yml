@@ -23,7 +23,7 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
-          terraform_version: "1.7.2"
+          terraform_version: "1.8.1"
 
       - name: Initialize Terraform
         run: terraform init
@@ -36,4 +36,4 @@ jobs:
         continue-on-error: true
 
       - name: Check code with tfsec
-        uses: aquasecurity/tfsec-action@v1.0.0
+        uses: aquasecurity/tfsec-action@v1.0.3
