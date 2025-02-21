@@ -1,9 +1,9 @@
 terraform {
-  required_version = "1.8.1"
+  required_version = "1.9.0"
   required_providers {
     oci = {
       source  = "oracle/oci"
-      version = "6.7.0"
+      version = "6.27.0"
     }
   }
   # backend "http" {
