@@ -55,5 +55,5 @@ variable "shape_arm_memory" {
 
 variable "count_instance" {
   default     = 1
-  description = "Defines the number of instances that will be provisioned. Two AMD limit on Always Free."
+  description = "Defines the number of instances that will be provisioned. Four Ampere limit on Always Free."
 }
