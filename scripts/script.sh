@@ -1,5 +1,33 @@
 #!/bin/bash
 
+sudo tee /tmp/index.html.j2 <<'EOF'
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+html { color-scheme: light dark; }
+body { width: 35em; margin: 0 auto;
+font-family: Tahoma, Verdana, Arial, sans-serif; }
+</style>
+</head>
+<body>
+<h1>DigitalOcean - It Works - {{ ansible_hostname }}</h1>
+<br>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+EOF
+
 if [ -f /etc/debian_version ]; then
   export DEBIAN_FRONTEND=noninteractive
   apt-get -q update && apt-get -qy install ansible
@@ -23,21 +51,29 @@ elif [ -f /etc/redhat-release ]; then
     }
 
   firewallrule
-  ansible-galaxy collection install community.general
 else
   echo "Unsuported Distro."
 fi
 
 tee -a requirements.yml <<'EOF'
 ---
-- src: dev-sec.ssh-hardening
-- src: geerlingguy.nginx
+roles:
+  - name: geerlingguy.nginx
+    version: "3.2.0"
+
+collections:
+  - name: community.general
+    version: ">=10.3.1"
+  
+  - name: devsec.hardening
+    version: ">=10.2.0"
 EOF
 
 tee -a playbook.yml <<'EOF'
 ---
 - hosts: localhost
   become: true
+  gather_facts: true
   vars:
     ssh_kex:
     - sntrup761x25519-sha512@openssh.com
@@ -48,14 +84,30 @@ tee -a playbook.yml <<'EOF'
     ssh_use_pam: "true"
     sshd_authenticationmethods: "publickey"
     ssh_authorized_keys_file: ".ssh/authorized_keys"
-  become: true
   tasks:
     - name: Install Nginx
       include_role:
         name: geerlingguy.nginx
+
     - name: SSH Hardening
       include_role:
-        name: dev-sec.ssh-hardening
+        name: devsec.hardening.ssh_hardening
+
+    - name: Copy index.html.j2 to Debian systems using template
+      template:
+        src: /tmp/index.html.j2
+        dest: /var/www/html/index.html
+      when: ansible_os_family == "Debian"
+
+    - name: Copy index.html.j2 to RedHat systems using template
+      template:
+        src: /tmp/index.html.j2
+        dest: /usr/share/nginx/html/index.html
+        owner: nginx
+        group: nginx
+        mode: '0644'
+      when: ansible_os_family == "RedHat"
+
   handlers:
     - name: start nginx
       service:
@@ -65,11 +117,3 @@ EOF
 
 ansible-galaxy install -r requirements.yml
 ansible-playbook playbook.yml
-
-if [ -f /etc/debian_version ]; then
-  printf "<h1>Oracle OCI - It Works</h1>" | sudo tee /var/www/html/index.nginx-debian.html
-elif [ -f /etc/redhat-release ]; then
-  printf "<h1>Oracle OCI - It Works</h1>" | sudo tee /usr/share/nginx/html/index.html
-else
-  printf "Unsuported Distro."
-fi
