@@ -3,11 +3,20 @@ terraform {
   required_providers {
     oci = {
       source  = "oracle/oci"
-      version = "6.27.0"
+      version = "7.0.0"
     }
   }
   # backend "http" {
-  #   address       = "https://objectstorage.us-ashburn-1.oraclecloud.com/<my-access-uri>"
   #   update_method = "PUT"
+  #   address       = "https://objectstorage.us-ashburn-1.oraclecloud.com/p/<my-access-url>/o/terraform/terraform.tfstate"
   # }
+}
+
+module "Ampere" {
+  source           = "./modules/ampere"
+  tenancy_ocid     = var.tenancy_ocid
+  user_ocid        = var.user_ocid
+  public_key_path  = var.public_key_path
+  private_key_path = var.private_key_path
+  fingerprint      = var.fingerprint
 }

@@ -1,5 +1,6 @@
 locals {
   compartment_id = oci_identity_compartment.compartment-name.id
+  enable_delete  = true
 }
 
 locals {
