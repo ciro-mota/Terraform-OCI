@@ -12,7 +12,7 @@ font-family: Tahoma, Verdana, Arial, sans-serif; }
 </style>
 </head>
 <body>
-<h1>DigitalOcean - It Works - {{ ansible_hostname }}</h1>
+<h1>OCI - It Works - {{ ansible_hostname }}</h1>
 <br>
 <h1>Welcome to nginx!</h1>
 <p>If you see this page, the nginx web server is successfully installed and
@@ -30,7 +30,7 @@ EOF
 
 if [ -f /etc/debian_version ]; then
   export DEBIAN_FRONTEND=noninteractive
-  apt-get -q update && apt-get -qy install ansible
+  sudo apt-get -q update && sudo apt-get -qy install ansible
 
   firewallDebRule() {
 		sudo iptables -I INPUT -p tcp --dport 80 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
@@ -40,7 +40,7 @@ if [ -f /etc/debian_version ]; then
 	firewallDebRule
 
 elif [ -f /etc/redhat-release ]; then
-  dnf install -y ansible-core firewalld
+  sudo dnf install -y ansible-core firewalld
 
   firewallrule() {
     systemctl start firewalld && \
@@ -115,5 +115,5 @@ tee -a playbook.yml <<'EOF'
         state: started
 EOF
 
-ansible-galaxy install -r requirements.yml
-ansible-playbook playbook.yml
+ansible-galaxy install -r /requirements.yml
+ansible-playbook /playbook.yml
