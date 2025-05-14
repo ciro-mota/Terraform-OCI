@@ -79,23 +79,23 @@ export TF_VAR_public_key_path=$(cat /home/your-username/.ssh/<your-pub-key>.pub)
 ## 💻 Usage
 
 > [!NOTE]\
-> You will be able to choose between Ubuntu 20.04 or 22.04 or Oracle Linux or AlmaLinux (Marketplace) images.
+> You will be able to choose between Ubuntu 20.04 until 24.04 or Oracle Linux or AlmaLinux (Marketplace) images.
 
 1. Clone this repo.
-2. By default an instance with **Ubuntu 22.04** with ARM hardware will be provisioned, if you want another OS modify the `instance.tf` file on lines `28` and `29`, if you wish.
+2. By default an instance with **Ubuntu 24.04** with **ARM hardware** will be provisioned, if you want another OS modify the `module/ampere/instance.tf` file on lines `29` to `32` if you wish.
 3. Run `terraform init`, `terraform plan -out= name-of-the-plan` and `terraform apply`. At the end, `terraform destroy` for deletion of what was created in the OCI.
 
 ## 💾 Remote state
 
-You might want to store your *states* remotely in an OCI bucket. For this **Main Menu** » **Storage** » **Object Storage & Archive Storage** » create a uniquely named *Bucket* » **Create Pre-Authenticated Request** » **Permit object reads and writes**, and copy the given URL.
+You might want to store your *state file* remotely in an OCI bucket. For this **Main Menu** » **Storage** » **Object Storage & Archive Storage** » **Buckets**. Create a *Bucket* with a uniquely named » **Create Bucket**. Click on the three dots » **Create Pre-Authenticated Request** » choose **Bucket** » **Permit object reads and writes** » **Create Pre-Authenticated Request**, and copy the given Pre-Authenticated Request URL.
 
-In the `main.tf` file, uncomment lines `9` to `12` and insert the given URL in the `address` field. This is a purely optional step.
+In the `main.tf` file uncomment lines `9` to `12` and edit the URL in the `address` field. This is a purely optional step.
 
 ## 🔧 Post Install Scripts
 
 You can also apply post-installation scripts to your instance through. This project counts as example scripts for `nginx` provisioning provided by Ansible Galaxy.
 
-To work with these settings, uncomment line `34` in the `instance.tf` file.
+To work with these settings uncomment line `37` in the `module/ampere/instance.tf` file.
 
 ## 🎁 Sponsoring
 
